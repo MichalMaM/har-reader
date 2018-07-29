@@ -1,0 +1,27 @@
+<div bsModal #entryModal="bs-modal"
+     class="modal fade"
+     tabindex="-1"
+     role="dialog"
+     aria-hidden="true">
+
+     <div id="modal" class="modal-dialog modal-lg">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h4 class="modal-title">{{ entry?.request?.url }}</h4>
+          <button type="button" class="close pull-right" aria-label="Close" (click)="entryModal.hide()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+         </div>
+         <div class="modal-body modal-min-height">
+           <ul class="list-inline">
+             <li *ngFor="let tab of tabs;" (click)="selectTab(tab)" class="list-inline-item pointer" [class.active]="selectedTab == tab">{{ tab.title }}</li>
+           </ul>
+           <div>
+             <app-data-viewer *ngIf="selectedTab" [data]="selectedTab.data(entry)">
+             </app-data-viewer>
+           </div>
+         </div>
+       </div>
+     </div>
+
+</div>

@@ -1,0 +1,8 @@
+<p>
+  <i class="fa fa-edit pointer" (click)="toogleMode()"></i>
+</p>
+<div *ngIf="!isViewMode" class="form-group">
+  <textarea class="form-control" rows="10">{{ data }}</textarea>
+</div>
+
+<markdown *ngIf="isViewMode" [data]="markdownData"></markdown>

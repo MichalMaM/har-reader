@@ -1,0 +1,52 @@
+<div class="text-center">
+  <h1 *ngIf="title">
+    <span popover="{{ title ? title : '' }}" placement="bottom" class="popover-heading">{{ title | slice:0:20 }}<span *ngIf="title.length > 20">...</span></span>
+    <span *ngIf="uploader?.queue?.length" (click)="removeFile()" class="ml-2 pointer text-danger"><i class="fa fa-times-circle"></i></span>
+    <span *ngIf="isOrigFileXml" class="ml-2 pointer" title="Stáhnout převedený xml soubor do JSONu" (click)="downloadHarFile()"><i class="fa fa-save"></i></span>
+    <a #downloadLink href="." style="display:none"></a>
+  </h1>
+  <div ng2FileDrop
+     *ngIf="!uploader?.queue?.length"
+     [ngClass]="{'upload-drop-over': hasDropZoneOver}"
+     (fileOver)="fileOver($event)"
+     [uploader]="uploader"
+     class="upload-content">
+
+    <p>Sem přetáhněte soubor</p>
+    <input type="file" id="file" #fileInput ng2FileSelect [uploader]="uploader" class="hidden"/>
+    <p class="text-center"><label class="btn btn-secondary" for="file">Vybrat z počítače</label></p>
+
+  </div>
+  <tabset *ngIf="fileContentObj.pages">
+    <tab *ngFor="let page of fileContentObj.pages; let i = index;">
+      <ng-template tabHeading>
+        <b>{{ (page.title || getDefaultPageTitle(i)) | slice:0:20 }}<span *ngIf="page.title.length > 20">...</span></b>
+        <span class="ml-3 badge badge-primary badge-pill">{{ fileContentObj.entries?.length || 0 }}</span>
+      </ng-template>
+      <table *ngIf="fileContentObj.entries?.length" class="table mt-3">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">URL</th>
+            <th scope="col">Method</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let entry of fileContentObj.entries; let ind = index">
+            <th scope="row">{{ ind }}</th>
+            <td><b class="pointer" (click)="openEntryModal(entry)">{{ entry.request.url }}</b></td>
+            <td><span [ngClass]="getClassesForRequestMethod(entry.request.method)" >{{ entry.request.method }}</span></td>
+            <td>
+              <span [ngClass]="getClassesForStatusCode(entry.response.status)">{{ entry.response.status }}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </tab>
+  </tabset>
+</div>
+<app-entry-detail
+  *ngIf="isOpenedEntryModal"
+  (canceled)="entryModalCanceled($event)"
+  [entry]="entryInModal"></app-entry-detail>

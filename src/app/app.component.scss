@@ -1,0 +1,35 @@
+.popover-heading {
+  position: relative;
+  display: inline-block;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.upload-content {
+	text-align: center;
+	padding: 5px;
+	border: 1px dashed gray;
+	background-color: lightgray;
+	input[type="file"] {
+		display: none;
+	}
+}
+.upload-drop-over {
+	border-color: theme-color('danger');
+}
+.upload-item {
+	//@extend .title;
+	background-color: #fff;
+	padding: 5px;
+	text-align: left;
+	border: 1px solid gray;
+}
+.upload-item__right {
+	float: right;
+}
+//.my-drop-zone { border: dotted 3px lightgray; }
+.nv-file-over { border-color: theme-color('primary'); } /* Default class applied to drop zones on over */
+.upload-drop-over { border-color: theme-color('primary');}
+.another-file-over-class { border-color: theme-color('success'); }
