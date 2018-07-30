@@ -6,6 +6,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { PopoverModule } from 'ngx-bootstrap/popover';
 import { AccordionModule } from 'ngx-bootstrap/accordion';
+import { AlertModule } from 'ngx-bootstrap/alert';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { FileUploadModule } from 'ng2-file-upload';
 import { MarkdownModule } from 'angular2-markdown';
@@ -28,6 +29,7 @@ import { EntryDetailComponent } from './entry-detail/entry-detail.component';
     PopoverModule.forRoot(),
     BsDropdownModule.forRoot(),
     ModalModule.forRoot(),
+    AlertModule.forRoot(),
     FileUploadModule,
     MarkdownModule.forRoot()
   ],

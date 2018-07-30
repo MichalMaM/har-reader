@@ -26,6 +26,7 @@ export class AppComponent implements OnInit {
   pageEntries = {};
   isOpenedEntryModal: boolean = false;
   entryInModal: any;
+  inputFileError: boolean = false;
 
   constructor(private ref: ApplicationRef) { }
 
@@ -81,12 +82,25 @@ export class AppComponent implements OnInit {
           if (result && result[0] === '<') {
             this.fileContentObj = this.xmlToJson(result)['log'];
             this.isOrigFileXml = true;
+            this.inputFileError = false;
           } else {
-            this.fileContentObj = JSON.parse(result).log;
-            this.isOrigFileXml = false;
+            try {
+              this.fileContentObj = JSON.parse(result).log;
+              this.isOrigFileXml = false;
+              this.inputFileError = false;
+            } catch(e) {
+              this.inputFileError = true
+              this.removeFile();
+              return;
+            }
           }
           // Use log attr because important data are in log property
           console.log(this.fileContentObj);
+          if (!this.fileContentObj || !this.fileContentObj.entries) {
+            this.inputFileError = true;
+            this.removeFile();
+            return;
+          }
           this.title = file.file.name;
           for (let entry of this.fileContentObj.entries || []) {
             this.pageEntries[entry.pageref] = this.pageEntries[entry.pageref] || [];

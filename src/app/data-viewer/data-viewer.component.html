@@ -1,8 +1,9 @@
 <p>
-  <i class="fa fa-edit pointer" (click)="toogleMode()"></i>
+  <i class="fa fa-edit pointer" (click)="toogleMode()" title="{{ isViewMode ? 'Přepnout na kopírovací mód' : 'Přepnout na prohlížecí mód'}}"></i>
 </p>
 <div *ngIf="!isViewMode" class="form-group">
   <textarea class="form-control" rows="10">{{ data }}</textarea>
 </div>
 
-<markdown *ngIf="isViewMode" [data]="markdownData"></markdown>
+<markdown *ngIf="isViewMode && !viewFailed" [data]="markdownData"></markdown>
+<alert *ngIf="isViewMode && viewFailed" [type]="'info'" [dismissible]="true">Náhled není k dispozici</alert>

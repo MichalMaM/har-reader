@@ -9,6 +9,7 @@ import { ChangeDetectionStrategy, Component, ElementRef, HostListener, Input, On
 export class DataViewerComponent implements OnInit {
   _data: any;
   isViewMode: boolean = true;
+  viewFailed: boolean = false;
 
   constructor(private element: ElementRef) { }
 
@@ -17,7 +18,13 @@ export class DataViewerComponent implements OnInit {
 
   @Input()
   set data(data) {
-    this._data = this.processData(data);
+    try {
+      this._data = this.processData(data);
+      this.viewFailed = false;
+    } catch(e) {
+      this._data = data;
+      this.viewFailed = true;
+    }
   }
 
   get data() {

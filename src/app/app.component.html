@@ -17,6 +17,7 @@
     <p class="text-center"><label class="btn btn-secondary" for="file">Vybrat z počítače</label></p>
 
   </div>
+  <alert *ngIf="inputFileError" [type]="'danger'" [dismissible]="true">Soubor se nepodařilo zpracovat, pravděpodobně to není soubor typu .har</alert>
   <tabset *ngIf="fileContentObj.pages">
     <tab *ngFor="let page of fileContentObj.pages; let i = index;">
       <ng-template tabHeading>
